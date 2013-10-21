@@ -4,7 +4,7 @@
     "version": "0.0.1",
     "description": "vital sign",
     "scripts": {
-        "test": "karma start "
+        "test": "karma start --browsers PhantomJS"
     },
     "main": "app.js",
     "repository": "https://github.com/greengerong/ngmodel-format",
