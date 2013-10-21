@@ -7,7 +7,9 @@ module.exports = function (config) {
 
         // list of files / patterns to load in the browser
         files: [
-            'lib/*.js',
+            'lib/jquery-1.8.2.min.js',
+            'lib/angular.min.js',
+            'lib/angular-mocks.js',
             'src/*.js',
             'test/*.js'
         ],
@@ -47,7 +49,7 @@ module.exports = function (config) {
 
         // Auto run tests on start (when browsers are captured) and exit
         // CLI --single-run --no-single-run
-        singleRun: true,
+        singleRun: false,
 
 
         plugins: [

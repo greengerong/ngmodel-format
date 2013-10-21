@@ -1,6 +1,5 @@
-;(function () {
-
-
+;
+(function () {
     angular.module('ngmodel.format', [])
         .constant("modelFormatConfig", {
             "currency": {
@@ -31,7 +30,7 @@
                     return args.$modelValue;
                 },
                 "parser": function (args) {
-                    return args.viewValue;
+                    return args.viewValue ? args.viewValue.replace(/[^0-9]/g, '') : undefined;
                 },
                 "isEmpty": function (value) {
                     return !value.$modelValue;
