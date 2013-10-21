@@ -1,0 +1,88 @@
+<!DOCTYPE html >
+<html ng-app="app">
+<head>
+    <title>demo</title>
+    <script type="text/javascript" src="../lib/angular.min.js"></script>
+    <script type="text/javascript" src="../src/ngmodel.format.js"></script>
+    <script type="text/javascript">
+        angular.module("app", ["ngmodel.format"]).
+                controller("ctr", function ($scope) {
+                    $scope.formatter = function (modelValue, filter, defaultValue) {
+                        console.log("arguments", arguments);
+                        if (modelValue) {
+                            return filter("currency")(modelValue);
+                        }
+                        return defaultValue;
+                    };
+
+                    $scope.all = function () {
+                        console.log("arguments", arguments);
+                        return true;
+                    };
+                });
+    </script>
+</head>
+<body ng-controller="ctr">
+<div>
+    <form name="form">
+        <filedset>
+            <legend>
+                currency: default config
+            </legend>
+            <input type="text" ng-model="test" model-format="currency"/>
+            <hr/>
+            <pre>{{test | json}}</pre>
+        </filedset>
+        <filedset>
+            <legend>
+                currency: customer config for formatter
+            </legend>
+            <input type="text" ng-model="test1" model-format="currency"
+                   formatter="formatter($modelValue,$filter,'$0.00');"/>
+            <hr/>
+            <pre>{{test1 | json}}</pre>
+        </filedset>
+
+        <filedset>
+            <legend>
+                currency: customer config for key down
+            </legend>
+            <input type="text" ng-model="test2" model-format="currency" name="test2"
+                   key-down="all($event,$modelValue,$viewValue)"/>
+            <hr/>
+            <pre>{{test2 | json}}</pre>
+        </filedset>
+
+        <filedset>
+            <legend>
+                digit
+            </legend>
+            <input type="text" ng-model="test3" model-format="digit"
+                    />
+            <hr/>
+            <pre>{{test3 | json}}</pre>
+        </filedset>
+
+        <filedset>
+            <legend>
+                int
+            </legend>
+            <input type="text" ng-model="test4" model-format="int"
+                    />
+            <hr/>
+            <pre>{{test4 | json}}</pre>
+        </filedset>
+
+        <filedset>
+            <legend>
+                float
+            </legend>
+            <input type="text" ng-model="test5" model-format="float"
+                    />
+            <hr/>
+            <pre>{{test5 | json}}</pre>
+        </filedset>
+    </form>
+</div>
+</body>
+</html>
