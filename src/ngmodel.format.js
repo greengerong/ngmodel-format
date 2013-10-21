@@ -20,7 +20,7 @@
                 "keyDown": function (args) {
                     var event = args.$event, viewValue = args.$viewValue, modelValue = args.$modelValue;
 
-                    if (!(smallKeyBoard(event) || numberKeyBpoard(event) || functionKeyBoard(event) || ( currencyKeyBoard(event, viewValue)))) {
+                    if (!(smallKeyBoard(event) || numberKeyBpoard(event) || functionKeyBoard(event) || currencyKeyBoard(event, viewValue) || floatKeyBoard(event, viewValue) )) {
                         event.stopPropagation();
                         event.preventDefault();
                     }
@@ -81,7 +81,7 @@
                 "keyDown": function (args) {
                     var event = args.$event, viewValue = args.$viewValue;
 
-                    if (!(smallKeyBoard(event) || numberKeyBpoard(event) || functionKeyBoard(event) )) {
+                    if (!(smallKeyBoard(event) || numberKeyBpoard(event) || functionKeyBoard(event) || floatKeyBoard(event, viewValue) )) {
                         event.stopPropagation();
                         event.preventDefault();
                     }
@@ -150,8 +150,15 @@
 
     var currencyKeyBoard = function (event, viewValue) {
         var which = event.which;
-        return  ( viewValue.toString().indexOf('$') === -1 && which === 52 && event.shiftKey)  || [188].indexOf(which) != -1 || ((( which === 190 || which === 110) && viewValue.toString().indexOf('.') === -1));
+        return  ( viewValue.toString().indexOf('$') === -1 && which === 52 && event.shiftKey);
     };
+
+    var floatKeyBoard = function(event,viewValue){
+        var which = event.which;
+        return [188].indexOf(which) != -1 || ( which === 190 || which === 110 ) && viewValue.toString().indexOf('.') === -1;
+    }
+
+
 
 })();
 
