@@ -1,0 +1,13 @@
+{
+    "name": "ngmodel-format",
+    "private": true,
+    "version": "0.0.1",
+    "description": "vital sign",
+    "scripts": {
+        "test": "karma start "
+    },
+    "main": "app.js",
+    "repository": "https://github.com/greengerong/ngmodel-format",
+    "author": "",
+    "license": "MIT"
+}
