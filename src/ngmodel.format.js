@@ -8,7 +8,7 @@
                     return  filter("currency")(modelValue);
                 },
                 "parser": function (args) {
-                    var viewValue = args.viewValue;
+                    var viewValue = args.$viewValue;
                     var num = viewValue.replace(/[^0-9.]/g, '');
                     var result = parseFloat(num, 10);
                     return isNaN(result) ? undefined : parseFloat(result.toFixed(2));
@@ -30,7 +30,7 @@
                     return args.$modelValue;
                 },
                 "parser": function (args) {
-                    return args.viewValue ? args.viewValue.replace(/[^0-9]/g, '') : undefined;
+                    return args.$viewValue ? args.$viewValue.replace(/[^0-9]/g, '') : undefined;
                 },
                 "isEmpty": function (value) {
                     return !value.$modelValue;
@@ -50,7 +50,7 @@
                     return  filter("number")(modelValue);
                 },
                 "parser": function (args) {
-                    var val = parseInt(args.viewValue.replace(/[^0-9]/g, ''), 10);
+                    var val = parseInt(args.$viewValue.replace(/[^0-9]/g, ''), 10);
                     return isNaN(val) ? undefined : val;
                 },
                 "isEmpty": function (value) {
@@ -71,7 +71,7 @@
                     return  filter("number")(modelValue);
                 },
                 "parser": function (args) {
-                    var val = parseFloat(args.viewValue.replace(/[^0-9.]/g, ''));
+                    var val = parseFloat(args.$viewValue.replace(/[^0-9.]/g, ''));
                     return isNaN(val) ? undefined : parseFloat(val.toFixed(3));
                 },
                 "isEmpty": function (value) {
@@ -117,7 +117,7 @@
                         });
 
                     ctrl.$parsers.push(function (viewValue) {
-                        return parser({"viewValue": viewValue});
+                        return parser({"$viewValue": viewValue});
                     });
 
                     ctrl.$formatters.push(function (value) {
