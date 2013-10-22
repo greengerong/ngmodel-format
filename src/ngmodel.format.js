@@ -11,7 +11,7 @@
                     var viewValue = args.viewValue;
                     var num = viewValue.replace(/[^0-9.]/g, '');
                     var result = parseFloat(num, 10);
-                    return isNaN(result) ? undefined : result;
+                    return isNaN(result) ? undefined : parseFloat(result.toFixed(2));
                 },
                 "isEmpty": function (value) {
                     return !value.$modelValue;
@@ -72,7 +72,7 @@
                 },
                 "parser": function (args) {
                     var val = parseFloat(args.viewValue.replace(/[^0-9.]/g, ''));
-                    return isNaN(val) ? undefined : val;
+                    return isNaN(val) ? undefined : parseFloat(val.toFixed(3));
                 },
                 "isEmpty": function (value) {
                     return !value.$modelValue;
@@ -152,11 +152,10 @@
         return  ( viewValue.toString().indexOf('$') === -1 && which === 52 && event.shiftKey);
     };
 
-    var floatKeyBoard = function(event,viewValue){
+    var floatKeyBoard = function (event, viewValue) {
         var which = event.which;
         return [188].indexOf(which) != -1 || ( which === 190 || which === 110 ) && viewValue.toString().indexOf('.') === -1;
     }
-
 
 
 })();

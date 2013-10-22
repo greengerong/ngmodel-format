@@ -20,13 +20,13 @@ describe('ngmodel.format', function () {
         it('should be format when blur', function () {
             elm.val("12345.123").trigger("input").trigger("blur");
             expect(elm.val()).toEqual("$12,345.12");
-            expect($scope.test).toEqual(12345.123);
+            expect($scope.test).toEqual(12345.12);
         });
 
         it('should be reject non-number', function () {
             elm.val("aa1.123").trigger("input").trigger("blur");
             expect(elm.val()).toEqual("$1.12");
-            expect($scope.test).toEqual(1.123);
+            expect($scope.test).toEqual(1.12);
         });
     });
 
