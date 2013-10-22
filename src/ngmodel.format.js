@@ -109,11 +109,14 @@
                     var parser = parseFuction("parser");
                     var isEmpty = parseFuction("isEmpty");
                     var keyDown = parseFuction("keyDown");
+                    var getModelValue = function () {
+                        return $parse(attrs.ngModel)(scope);
+                    };
 
                     element.bind("blur",function () {
-                        element.val(formatter({"$modelValue": scope[attrs.ngModel], "$filter": $filter}));
+                        element.val(formatter({"$modelValue": getModelValue(), "$filter": $filter}));
                     }).bind("keydown", function (event) {
-                            keyDown({"$event": event, "$viewValue": element.val(), "$modelValue": scope[attrs.ngModel]});
+                            keyDown({"$event": event, "$viewValue": element.val(), "$modelValue": getModelValue()});
                         });
 
                     ctrl.$parsers.push(function (viewValue) {
