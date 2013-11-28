@@ -86,6 +86,23 @@
                     }
 
                 }
+            },
+            "boolean": {
+                "formatter": function (args) {
+                    var modelValue = args.$modelValue;
+                    if (!angular.isUndefined(modelValue)) {
+                        return modelValue.toString();
+                    }
+                },
+                "parser": function (args) {
+                    var viewValue = args.$viewValue;
+                    if (!angular.isUndefined(viewValue)) {
+                        return viewValue.trim() === "true";
+                    }
+                },
+                "isEmpty": function (value) {
+                    return angular.isUndefined(value);
+                }
             }
         })
         .directive("modelFormat", ["modelFormatConfig", "$filter", "$parse", function (modelFormatConfig, $filter, $parse) {
