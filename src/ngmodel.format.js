@@ -130,11 +130,13 @@
                         return $parse(attrs.ngModel)(scope);
                     };
 
-                    element.bind("blur",function () {
-                        element.val(formatter({"$modelValue": getModelValue(), "$filter": $filter}));
-                    }).bind("keydown", function (event) {
-                            keyDown({"$event": event, "$viewValue": element.val(), "$modelValue": getModelValue()});
-                        });
+                    if (keyDown) {
+                        element.bind("blur",function () {
+                            element.val(formatter({"$modelValue": getModelValue(), "$filter": $filter}));
+                        }).bind("keydown", function (event) {
+                                keyDown({"$event": event, "$viewValue": element.val(), "$modelValue": getModelValue()});
+                            });
+                    }
 
                     ctrl.$parsers.push(function (viewValue) {
                         return parser({"$viewValue": viewValue});
