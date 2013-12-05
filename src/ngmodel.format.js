@@ -71,8 +71,10 @@
                     return  filter("number")(modelValue);
                 },
                 "parser": function (args) {
-                    var val = parseFloat(args.$viewValue.replace(/[^0-9.]/g, ''));
-                    return isNaN(val) ? undefined : parseFloat(val.toFixed(3));
+                    var val = parseFloat(args.$viewValue.replace(/[^0-9.]/g, '')),
+                        ENOB = 3,
+                        tempNum = Math.pow(10,ENOB);
+                    return isNaN(val) ? undefined : Math.round(val*tempNum)/tempNum;
                 },
                 "isEmpty": function (value) {
                     return !value.$modelValue;
@@ -85,23 +87,6 @@
                         event.preventDefault();
                     }
 
-                }
-            },
-            "boolean": {
-                "formatter": function (args) {
-                    var modelValue = args.$modelValue;
-                    if (!angular.isUndefined(modelValue)) {
-                        return modelValue.toString();
-                    }
-                },
-                "parser": function (args) {
-                    var viewValue = args.$viewValue;
-                    if (!angular.isUndefined(viewValue)) {
-                        return viewValue.trim() === "true";
-                    }
-                },
-                "isEmpty": function (value) {
-                    return angular.isUndefined(value);
                 }
             }
         })
@@ -130,13 +115,11 @@
                         return $parse(attrs.ngModel)(scope);
                     };
 
-                    if (keyDown) {
-                        element.bind("blur",function () {
-                            element.val(formatter({"$modelValue": getModelValue(), "$filter": $filter}));
-                        }).bind("keydown", function (event) {
-                                keyDown({"$event": event, "$viewValue": element.val(), "$modelValue": getModelValue()});
-                            });
-                    }
+                    element.bind("blur",function () {
+                        element.val(formatter({"$modelValue": getModelValue(), "$filter": $filter}));
+                    }).bind("keydown", function (event) {
+                            keyDown({"$event": event, "$viewValue": element.val(), "$modelValue": getModelValue()});
+                        });
 
                     ctrl.$parsers.push(function (viewValue) {
                         return parser({"$viewValue": viewValue});
