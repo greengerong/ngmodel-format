@@ -112,4 +112,39 @@ describe('ngmodel.format', function () {
             expect($scope.test).toEqual(1.123);
         });
     });
+
+    describe('boolean format', function () {
+
+        beforeEach(function () {
+            var html = '<div><input type="radio" ng-model="test" model-format="boolean" value="true"/>' +
+                ' <input type="radio" ng-model="test" model-format="boolean" value="false"/></div>';
+            elm = $compile(angular.element(html))($scope);
+            $scope.$digest();
+        });
+
+        xit('should get a boolean', function () {
+            elm.find("input:eq(0)").attr("checked", true).trigger("change");
+            $scope.$digest();
+            expect($scope.test).toBeTruthy();
+
+            elm.find("input:eq(1)").attr("checked", true).trigger("change");
+            $scope.$digest();
+            expect($scope.test).toBeFalsy();
+        });
+
+        it('should be render to view', function () {
+            $scope.test = true;
+            $scope.$digest();
+            expect(elm.find("input:eq(0)").is(":checked")).toBeTruthy();
+
+            $scope.test = false;
+            $scope.$digest();
+            expect(elm.find("input:eq(1)").is(":checked")).toBeTruthy();
+
+            $scope.test = undefined;
+            $scope.$digest();
+            expect(elm.find("input:eq(0)").is(":checked")).toBeFalsy();
+            expect(elm.find("input:eq(1)").is(":checked")).toBeFalsy();
+        });
+    });
 });
