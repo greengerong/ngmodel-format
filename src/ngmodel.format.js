@@ -88,6 +88,23 @@
                     }
 
                 }
+            },
+            "boolean": {
+                "formatter": function (args) {
+                    var modelValue = args.$modelValue;
+                    if (!angular.isUndefined(modelValue)) {
+                        return modelValue.toString();
+                    }
+                },
+                "parser": function (args) {
+                    var viewValue = args.$viewValue;
+                    if (!angular.isUndefined(viewValue)) {
+                        return viewValue.trim() === "true";
+                    }
+                },
+                "isEmpty": function (value) {
+                    return angular.isUndefined(value);
+                }
             }
         })
         .directive("modelFormat", ["modelFormatConfig", "$filter", "$parse", function (modelFormatConfig, $filter, $parse) {
@@ -115,11 +132,14 @@
                         return $parse(attrs.ngModel)(scope);
                     };
 
-                    element.bind("blur",function () {
-                        element.val(formatter({"$modelValue": getModelValue(), "$filter": $filter}));
-                    }).bind("keydown", function (event) {
-                            keyDown({"$event": event, "$viewValue": element.val(), "$modelValue": getModelValue()});
-                        });
+                    if (keyDown) {
+                        element.bind("blur",function () {
+                            element.val(formatter({"$modelValue": getModelValue(), "$filter": $filter}));
+                        }).bind("keydown", function (event) {
+                                keyDown({"$event": event, "$viewValue": element.val(), "$modelValue": getModelValue()});
+                            });
+                    }
+
 
                     ctrl.$parsers.push(function (viewValue) {
                         return parser({"$viewValue": viewValue});
