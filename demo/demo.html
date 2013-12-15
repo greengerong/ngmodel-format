@@ -82,6 +82,26 @@
             <hr/>
             <pre>{{test5 | json}}</pre>
         </filedset>
+
+        <filedset>
+            <legend>
+                Check box value to a Array
+            </legend>
+            <div><input type="radio" ng-model="testBoolean" model-format="boolean" value="true"/>
+                <input type="radio" ng-model="testBoolean" model-format="boolean" value="false"/></div>
+            <hr/>
+            <pre>{{testBoolean | json}}</pre>
+        </filedset>
+
+        <filedset>
+            <legend>
+                Check box value to a Array
+            </legend>
+            <div><input ng-model="testToArray" type="checkbox" check-box-to-array="1"/>
+                <input ng-model="testToArray" type="checkbox" check-box-to-array="2"/></div>
+            <hr/>
+            <pre>{{testToArray | json}}</pre>
+        </filedset>
     </form>
 </div>
 </body>
