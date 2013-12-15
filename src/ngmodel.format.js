@@ -73,8 +73,8 @@
                 "parser": function (args) {
                     var val = parseFloat(args.$viewValue.replace(/[^0-9.]/g, '')),
                         ENOB = 3,
-                        tempNum = Math.pow(10,ENOB);
-                    return isNaN(val) ? undefined : Math.round(val*tempNum)/tempNum;
+                        tempNum = Math.pow(10, ENOB);
+                    return isNaN(val) ? undefined : Math.round(val * tempNum) / tempNum;
                 },
                 "isEmpty": function (value) {
                     return !value.$modelValue;
@@ -154,6 +154,35 @@
                     };
                 }
             };
+        }])
+        .directive("checkBoxToArray", [function () {
+            return {
+                restrict: "A",
+                require: "ngModel",
+                link: function (scope, element, attrs, ctrl) {
+                    var value = scope.$eval(attrs.checkBoxToArray);
+                    ctrl.$parsers.push(function (viewValue) {
+                        var modelValue = ctrl.$modelValue ? angular.copy(ctrl.$modelValue) : [];
+                        if (viewValue === true && modelValue.indexOf(value) === -1) {
+                            modelValue.push(value);
+                        }
+
+                        if (viewValue !== true && modelValue.indexOf(value) != -1) {
+                            modelValue.splice(modelValue.indexOf(value), 1);
+                        }
+
+                        return modelValue.sort();
+                    });
+
+                    ctrl.$formatters.push(function (modelValue) {
+                        return modelValue && modelValue.indexOf(value) != -1;
+                    });
+
+                    ctrl.$isEmpty = function ($modelValue) {
+                        return !$modelValue || $modelValue.length === 0;
+                    };
+                }
+            }
         }]);
 
 

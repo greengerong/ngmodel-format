@@ -122,12 +122,12 @@ describe('ngmodel.format', function () {
             $scope.$digest();
         });
 
-        xit('should get a boolean', function () {
-            elm.find("input:eq(0)").attr("checked", true).trigger("change");
+        it('should get a boolean', function () {
+            elm.find("input:eq(0)").attr("checked", true).trigger("click");
             $scope.$digest();
             expect($scope.test).toBeTruthy();
 
-            elm.find("input:eq(1)").attr("checked", true).trigger("change");
+            elm.find("input:eq(1)").attr("checked", true).trigger("click");
             $scope.$digest();
             expect($scope.test).toBeFalsy();
         });
@@ -140,6 +140,47 @@ describe('ngmodel.format', function () {
             $scope.test = false;
             $scope.$digest();
             expect(elm.find("input:eq(1)").is(":checked")).toBeTruthy();
+
+            $scope.test = undefined;
+            $scope.$digest();
+            expect(elm.find("input:eq(0)").is(":checked")).toBeFalsy();
+            expect(elm.find("input:eq(1)").is(":checked")).toBeFalsy();
+        });
+    });
+
+    describe('check box to array', function () {
+
+        beforeEach(function () {
+            var html = '<div><input ng-model="test" type="checkbox" check-box-to-array="1"/>' +
+                '<input ng-model="test" type="checkbox" check-box-to-array="2"/></div>';
+            elm = $compile(angular.element(html))($scope);
+            $scope.$digest();
+        });
+
+        it('should get a boolean', function () {
+            elm.find("input:eq(0)").attr("checked", true).trigger("click");
+            $scope.$digest();
+            expect($scope.test).toEqual([1]);
+
+            elm.find("input:eq(1)").attr("checked", true).trigger("click");
+            $scope.$digest();
+            expect($scope.test).toEqual([1, 2]);
+
+            elm.find("input").removeAttr("checked").trigger("click");
+            $scope.$digest();
+            expect($scope.test).toEqual([]);
+        });
+
+        it('should be render to view', function () {
+            $scope.test = [1, 2];
+            $scope.$apply();
+            expect(elm.find("input:eq(0)").is(":checked")).toBeTruthy();
+            expect(elm.find("input:eq(1)").is(":checked")).toBeTruthy();
+
+            $scope.test = [1];
+            $scope.$digest();
+            expect(elm.find("input:eq(0)").is(":checked")).toBeTruthy();
+            expect(elm.find("input:eq(1)").is(":checked")).toBeFalsy();
 
             $scope.test = undefined;
             $scope.$digest();
