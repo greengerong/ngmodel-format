@@ -1,0 +1,24 @@
+{
+  "name": "ngmodel-format",
+  "version": "0.0.1",
+  "authors": [
+  ],
+  "description": "angualr format for input/select",
+  "main": "./src/ngmodel.format.js",
+  "keywords": [
+    "angular",
+    "angularjs",
+    "currency",
+    "field",
+    "format"
+  ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "lib",
+    "demo"
+  ]
+}
