@@ -19,6 +19,7 @@
     "test",
     "tests",
     "lib",
-    "demo"
+    "demo",
+    "karma.conf.js"
   ]
 }
