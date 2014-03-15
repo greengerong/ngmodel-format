@@ -2,5 +2,5 @@ language: node_js
 node_js:
   - "0.10"
 before_script:
-  - npm install -g karma
-  - npm install -g karma-phantomjs-launcher
+  - npm install -g karma@0.10.9
+  - npm install -g karma-phantomjs-launcher@1.9.7-1
