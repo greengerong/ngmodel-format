@@ -1,4 +1,14 @@
-;
+/******************************************
+ *                                        *
+ * Auth: green gerong                     *
+ * Date: 2012                             *
+ * blog: http://greengerong.github.io/    *
+ * github: https://github.com/greengerong *
+ *                                        *
+ ******************************************/
+
+'use strict';
+
 (function () {
     angular.module('ngmodel.format', [])
         .constant("modelFormatConfig", {
