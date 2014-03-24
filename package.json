@@ -4,10 +4,21 @@
     "version": "0.0.1",
     "description": "vital sign",
     "scripts": {
-        "test": "karma start --browsers PhantomJS"
+        "test": "grunt"
+    },
+    "engines": {
+      "node": ">=0.8.0"
+    },
+    "devDependencies": {
+        "grunt": "~0.4.1",
+        "grunt-karma": "~0.6.2"
     },
     "main": "app.js",
-    "repository": "https://github.com/greengerong/ngmodel-format",
+    "repository": {
+      "type":"git",
+      "url": "https://github.com/greengerong/ngmodel-format"
+    },
+
     "author": "",
     "license": "MIT"
 }
