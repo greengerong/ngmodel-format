@@ -14,8 +14,13 @@
         .constant("modelFormatConfig", {
             "currency": {
                 "formatter": function (args) {
-                    var modelValue = args.$modelValue, filter = args.$filter;
-                    return  filter("currency")(modelValue);
+                    var modelValue = args.$modelValue, 
+                        filter = args.$filter,
+                        attrs  = args.$attrs,
+                        $eval  = args.$eval;
+
+                    var val = filter("currency")(modelValue);
+                    return attrs.prefixed && $eval(attrs.prefixed) ? val : val.substr(1);
                 },
                 "parser": function (args) {
                     var viewValue = args.$viewValue;
@@ -144,23 +149,23 @@
 
                     if (keyDown) {
                         element.bind("blur",function () {
-                            element.val(formatter({"$modelValue": getModelValue(), "$filter": $filter}));
+                            element.val(formatter({"$modelValue": getModelValue(), "$filter": $filter, "$attrs": attrs, "$eval": scope.$eval}));
                         }).bind("keydown", function (event) {
-                                keyDown({"$event": event, "$viewValue": element.val(), "$modelValue": getModelValue()});
+                                keyDown({"$event": event, "$viewValue": element.val(), "$modelValue": getModelValue(), "$attrs": attrs, "$eval": scope.$eval});
                             });
                     }
 
 
                     ctrl.$parsers.push(function (viewValue) {
-                        return parser({"$viewValue": viewValue});
+                        return parser({"$viewValue": viewValue, "$attrs": attrs, "$eval": scope.$eval});
                     });
 
                     ctrl.$formatters.push(function (value) {
-                        return formatter({"$modelValue": value, "$filter": $filter});
+                        return formatter({"$modelValue": value, "$filter": $filter, "$attrs": attrs, "$eval": scope.$eval});
                     });
 
                     ctrl.$isEmpty = function (value) {
-                        return isEmpty({"$modelValue": value});
+                        return isEmpty({"$modelValue": value, "$attrs": attrs, "$eval": scope.$eval});
                     };
                 }
             };
