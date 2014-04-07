@@ -12,7 +12,7 @@ describe('ngmodel.format', function () {
     describe('currency format', function () {
 
         beforeEach(function () {
-            var html = '<input type="text" ng-model="test" model-format="currency"/>';
+            var html = '<input type="text" ng-model="test" model-format="currency"  prefixed="true"/>';
             elm = $compile(angular.element(html))($scope);
             $scope.$digest();
         });
