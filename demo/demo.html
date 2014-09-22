@@ -1,108 +1,156 @@
 <!DOCTYPE html >
 <html ng-app="app">
+
 <head>
     <title>demo</title>
     <script type="text/javascript" src="../lib/angular.min.js"></script>
     <script type="text/javascript" src="../src/ngmodel.format.js"></script>
     <script type="text/javascript">
+    (function(gobal, angular) {
         angular.module("app", ["ngmodel.format"]).
-                controller("ctr", function ($scope) {
-                    $scope.formatter = function (modelValue, filter, defaultValue) {
-                        console.log("arguments", arguments);
-                        if (modelValue) {
-                            return filter("currency")(modelValue);
-                        }
-                        return defaultValue;
-                    };
+        controller("ctr", function($scope) {
+            $scope.formatter = function(modelValue, filter, defaultValue) {
+                console.log("arguments", arguments);
+                if (modelValue) {
+                    return filter("currency")(modelValue);
+                }
+                return defaultValue;
+            };
 
-                    $scope.all = function () {
-                        console.log("arguments", arguments);
-                        return true;
-                    };
-                });
+            $scope.all = function() {
+                console.log("arguments", arguments);
+                return true;
+            };
+        })
+            .config(["modelFormatConfig",
+                function(modelFormatConfig) {
+                    modelFormatConfig["number"] = {
+                        "formatter": function(args) {
+                            var modelValue = args.$modelValue,
+                                filter = args.$filter;
+                            return filter("number")(modelValue);
+                        },
+                        "parser": function(args) {
+                            var val = parseInt(args.$viewValue.replace(/[^0-9\-]/g, ''), 10);
+                            return isNaN(val) ? undefined : val;
+                        },
+                        "isEmpty": function(value) {
+                            return !value.$modelValue;
+                        },
+                        "keyDown": function(args) {
+                            var event = args.$event;
+
+                            if (!(gobal.keyHelper.smallKeyBoard(event) || gobal.keyHelper.numberKeyBpoard(event) || gobal.keyHelper.functionKeyBoard(event) || minus(event))) {
+                                event.stopPropagation();
+                                event.preventDefault();
+                            }
+                        }
+
+                    }
+                }
+            ]);
+
+        var minus = function(event) {
+            var which = event.which;
+            return (which == 45 || which == 189);
+        };
+    })(this, angular);
     </script>
 </head>
+
 <body ng-controller="ctr">
-<div>
-    <form name="form">
-        <filedset>
-            <legend>
-                currency: default config
-            </legend>
-            <input type="text" ng-model="test" model-format="currency" />
-            <hr/>
-            <pre>{{test | json}}</pre>
-        </filedset>
-        <filedset>
-            <legend>
-                currency: customer config for formatter
-            </legend>
-            <input type="text" ng-model="test1" model-format="currency"
-                   formatter="formatter($modelValue,$filter,'$0.00');"/>
-            <hr/>
-            <pre>{{test1 | json}}</pre>
-        </filedset>
+    <div>
+        <form name="form">
+            <filedset>
+                <legend>
+                    currency: default config
+                </legend>
+                <input type="text" ng-model="test" model-format="currency" />
+                <hr/>
+                <pre>{{test | json}}</pre>
+            </filedset>
+            <filedset>
+                <legend>
+                    currency: customer config for formatter
+                </legend>
+                <input type="text" ng-model="test1" model-format="currency" formatter="formatter($modelValue,$filter,'$0.00');" />
+                <hr/>
+                <pre>{{test1 | json}}</pre>
+            </filedset>
 
-        <filedset>
-            <legend>
-                currency: customer config for key down
-            </legend>
-            <input type="text" ng-model="test2" model-format="currency" name="test2"
-                   key-down="all($event,$modelValue,$viewValue)"/>
-            <hr/>
-            <pre>{{test2 | json}}</pre>
-        </filedset>
+            <filedset>
+                <legend>
+                    currency: customer config for key down
+                </legend>
+                <input type="text" ng-model="test2" model-format="currency" name="test2" key-down="all($event,$modelValue,$viewValue)" />
+                <hr/>
+                <pre>{{test2 | json}}</pre>
+            </filedset>
 
-        <filedset>
-            <legend>
-                digit
-            </legend>
-            <input type="text" ng-model="test3" model-format="digit"
-                    />
-            <hr/>
-            <pre>{{test3 | json}}</pre>
-        </filedset>
+            <filedset>
+                <legend>
+                    digit
+                </legend>
+                <input type="text" ng-model="test3" model-format="digit" />
+                <hr/>
+                <pre>{{test3 | json}}</pre>
+            </filedset>
 
-        <filedset>
-            <legend>
-                int
-            </legend>
-            <input type="text" ng-model="test4" model-format="int"
-                    />
-            <hr/>
-            <pre>{{test4 | json}}</pre>
-        </filedset>
+            <filedset>
+                <legend>
+                    int
+                </legend>
+                <input type="text" ng-model="test4" model-format="int" />
+                <hr/>
+                <pre>{{test4 | json}}</pre>
+            </filedset>
 
-        <filedset>
-            <legend>
-                float
-            </legend>
-            <input type="text" ng-model="test5" model-format="float"
-                    />
-            <hr/>
-            <pre>{{test5 | json}}</pre>
-        </filedset>
+            <filedset>
+                <legend>
+                    float
+                </legend>
+                <input type="text" ng-model="test5" model-format="float" />
+                <hr/>
+                <pre>{{test5 | json}}</pre>
+            </filedset>
 
-        <filedset>
-            <legend>
-                Check box value to a Array
-            </legend>
-            <div><input type="radio" ng-model="testBoolean" model-format="boolean" value="true"/>
-                <input type="radio" ng-model="testBoolean" model-format="boolean" value="false"/></div>
-            <hr/>
-            <pre>{{testBoolean | json}}</pre>
-        </filedset>
+            <filedset>
+                <legend>
+                    Check box value to a Array
+                </legend>
+                <div>
+                    <input type="radio" ng-model="testBoolean" model-format="boolean" value="true" />
+                    <input type="radio" ng-model="testBoolean" model-format="boolean" value="false" />
+                </div>
+                <hr/>
+                <pre>{{testBoolean | json}}</pre>
+            </filedset>
 
-        <filedset>
-            <legend>
-                Check box value to a Array
-            </legend>
-            <div><input ng-model="testToArray" type="checkbox" check-box-to-array="1"/>
-                <input ng-model="testToArray" type="checkbox" check-box-to-array="2"/></div>
-            <hr/>
-            <pre>{{testToArray | json}}</pre>
-        </filedset>
-    </form>
-</div>
+            <filedset>
+                <legend>
+                    Check box value to a Array
+                </legend>
+                <div>
+                    <input ng-model="testToArray" type="checkbox" check-box-to-array="1" />
+                    <input ng-model="testToArray" type="checkbox" check-box-to-array="2" />
+                </div>
+                <hr/>
+                <pre>{{testToArray | json}}</pre>
+            </filedset>
+
+            <filedset>
+                <legend>
+                    customer key: number(include negative numbers)
+                </legend>
+                <input type="text" ng-model="testNumber" model-format="number" />
+                <hr/>
+                <pre>{{testNumber | json}}</pre>
+            </filedset>
+            <br/>
+            <br/>
+            <br/>
+        </form>
+    </div>
 </body>
+
 </html>
