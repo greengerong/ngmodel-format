@@ -5,7 +5,7 @@ ngmodel.format
 [![Build Status](https://travis-ci.org/greengerong/ngmodel-format.png)](https://travis-ci.org/greengerong/ngmodel-format)
 
 
-* angualr format for input/select ... ng-model stuff, the model value will be not same as view value.
+* angular format for input/select ... ng-model stuff, the model value will be not same as view value.
 
 * there are some default format: currency, digit,int,float.
 
