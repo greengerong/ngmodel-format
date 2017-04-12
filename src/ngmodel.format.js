@@ -248,7 +248,7 @@
 
     var functionKeyBoard = function(event) {
         var which = event.which;
-        return (which <= 40) || (navigator.platform.indexOf("Mac") > -1 && event.metaKey) || (navigator.platform.indexOf("Win") > -1 && event.ctrlKey);
+        return (which <= 40) || (which === 46) || (navigator.platform.indexOf("Mac") > -1 && event.metaKey) || (navigator.platform.indexOf("Win") > -1 && event.ctrlKey);
     };
 
     var currencyKeyBoard = function(event, viewValue) {
