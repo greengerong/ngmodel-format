@@ -9,7 +9,7 @@
 
 'use strict';
 
-(function(gobal, angular) {
+(function(global, angular) {
     angular.module('ngmodel.format', [])
         .constant("modelFormatConfig", {
             "currency": {
@@ -36,7 +36,7 @@
                         viewValue = args.$viewValue,
                         modelValue = args.$modelValue;
 
-                    if (!(gobal.keyHelper.smallKeyBoard(event) || gobal.keyHelper.numberKeyBpoard(event) || gobal.keyHelper.functionKeyBoard(event) || gobal.keyHelper.currencyKeyBoard(event, viewValue) || gobal.keyHelper.floatKeyBoard(event, viewValue))) {
+                    if (!(global.keyHelper.smallKeyBoard(event) || global.keyHelper.numberKeyBoard(event) || global.keyHelper.functionKeyBoard(event) || global.keyHelper.currencyKeyBoard(event, viewValue) || global.keyHelper.floatKeyBoard(event, viewValue))) {
                         event.stopPropagation();
                         event.preventDefault();
                     }
@@ -55,7 +55,7 @@
                 "keyDown": function(args) {
                     var event = args.$event;
 
-                    if (!(gobal.keyHelper.smallKeyBoard(event) || gobal.keyHelper.numberKeyBpoard(event) || gobal.keyHelper.functionKeyBoard(event))) {
+                    if (!(global.keyHelper.smallKeyBoard(event) || global.keyHelper.numberKeyBoard(event) || global.keyHelper.functionKeyBoard(event))) {
                         event.stopPropagation();
                         event.preventDefault();
                     }
@@ -77,7 +77,7 @@
                 "keyDown": function(args) {
                     var event = args.$event;
 
-                    if (!(gobal.keyHelper.smallKeyBoard(event) || gobal.keyHelper.numberKeyBpoard(event) || gobal.keyHelper.functionKeyBoard(event))) {
+                    if (!(global.keyHelper.smallKeyBoard(event) || global.keyHelper.numberKeyBoard(event) || global.keyHelper.functionKeyBoard(event))) {
                         event.stopPropagation();
                         event.preventDefault();
                     }
@@ -102,7 +102,7 @@
                     var event = args.$event,
                         viewValue = args.$viewValue;
 
-                    if (!(gobal.keyHelper.smallKeyBoard(event) || gobal.keyHelper.numberKeyBpoard(event) || gobal.keyHelper.functionKeyBoard(event) || gobal.keyHelper.floatKeyBoard(event, viewValue))) {
+                    if (!(global.keyHelper.smallKeyBoard(event) || global.keyHelper.numberKeyBoard(event) || global.keyHelper.functionKeyBoard(event) || global.keyHelper.floatKeyBoard(event, viewValue))) {
                         event.stopPropagation();
                         event.preventDefault();
                     }
@@ -241,7 +241,7 @@
         return (which >= 96 && which <= 105);
     };
 
-    var numberKeyBpoard = function(event) {
+    var numberKeyBoard = function(event) {
         var which = event.which;
         return (which >= 48 && which <= 57) && !event.shiftKey;
     };
@@ -261,9 +261,9 @@
         return [188].indexOf(which) != -1 || (which === 190 || which === 110) && viewValue.toString().indexOf('.') === -1;
     }
 
-    gobal.keyHelper = {
+    global.keyHelper = {
         smallKeyBoard: smallKeyBoard,
-        numberKeyBpoard: numberKeyBpoard,
+        numberKeyBoard: numberKeyBoard,
         functionKeyBoard: functionKeyBoard,
         currencyKeyBoard: currencyKeyBoard,
         floatKeyBoard: floatKeyBoard
