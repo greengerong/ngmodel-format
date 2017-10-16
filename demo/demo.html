@@ -6,7 +6,7 @@
     <script type="text/javascript" src="../lib/angular.min.js"></script>
     <script type="text/javascript" src="../src/ngmodel.format.js"></script>
     <script type="text/javascript">
-    (function(gobal, angular) {
+    (function(global, angular) {
         angular.module("app", ["ngmodel.format"]).
         controller("ctr", function($scope) {
             $scope.formatter = function(modelValue, filter, defaultValue) {
@@ -40,7 +40,7 @@
                         "keyDown": function(args) {
                             var event = args.$event;
 
-                            if (!(gobal.keyHelper.smallKeyBoard(event) || gobal.keyHelper.numberKeyBpoard(event) || gobal.keyHelper.functionKeyBoard(event) || minus(event))) {
+                            if (!(global.keyHelper.smallKeyBoard(event) || global.keyHelper.numberKeyBoard(event) || global.keyHelper.functionKeyBoard(event) || minus(event))) {
                                 event.stopPropagation();
                                 event.preventDefault();
                             }
